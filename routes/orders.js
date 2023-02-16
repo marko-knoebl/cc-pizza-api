@@ -4,12 +4,12 @@ import express from "express";
 const ordersRouter = express.Router();
 
 ordersRouter.get("/", (req, res) => {
-  const orders = JSON.parse(fs.readFileSync("./orders.json"));
+  const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
   res.json(orders);
 });
 
 ordersRouter.get("/:id", (req, res) => {
-  const orders = JSON.parse(fs.readFileSync("./orders.json"));
+  const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
   const orderFromId = orders.orders.find(
     (order) => order.id.toString() === req.params.id
   );
@@ -18,7 +18,7 @@ ordersRouter.get("/:id", (req, res) => {
 
 ordersRouter.post("/", (req, res) => {
   const newOrder = req.body;
-  const orders = JSON.parse(fs.readFileSync("./orders.json"));
+  const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
   let maxId = 0;
   for (let order of orders) {
     maxId = Math.max(maxId, order.id);
@@ -33,7 +33,7 @@ ordersRouter.post("/", (req, res) => {
 
 ordersRouter.delete("/:id", (req, res) => {
   const id = Number(req.params.id);
-  const orders = JSON.parse(fs.readFileSync(".data//orders.json"));
+  const orders = JSON.parse(fs.readFileSync(".data/orders.json"));
   const newOrders = orders.filter((order) => order.id !== id);
 
   fs.writeFileSync("./data/orders.json", JSON.stringify(newOrders, undefined, 2));
