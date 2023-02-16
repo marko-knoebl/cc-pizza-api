@@ -4,7 +4,17 @@ import express from "express";
 const ordersRouter = express.Router();
 
 ordersRouter.get("/", (req, res) => {
-  const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
+  let orders = JSON.parse(fs.readFileSync("./data/orders.json"));
+
+  // filtering
+
+  if (req.query["completed"] === "true") {
+    orders = orders.filter((order) => order.completed);
+  }
+  if (req.query["completed"] === "false") {
+    orders = orders.filter((order) => !order.completed);
+  }
+
   res.json(orders);
 });
 
@@ -36,7 +46,10 @@ ordersRouter.delete("/:id", (req, res) => {
   const orders = JSON.parse(fs.readFileSync(".data/orders.json"));
   const newOrders = orders.filter((order) => order.id !== id);
 
-  fs.writeFileSync("./data/orders.json", JSON.stringify(newOrders, undefined, 2));
+  fs.writeFileSync(
+    "./data/orders.json",
+    JSON.stringify(newOrders, undefined, 2)
+  );
   res.json({ status: "success" });
 });
 
@@ -48,6 +61,18 @@ ordersRouter.put("/:id", (req, res) => {
   orders[index] = newOrder;
 
   fs.writeFileSync("./data/orders.json", JSON.stringify(orders, undefined, 2));
+  res.json({ status: "success" });
+});
+
+ordersRouter.patch("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const newData = req.body;
+  const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
+  const newOrders = orders.map((order) =>
+    order.id === id ? { ...order, ...newData } : order
+  );
+
+  fs.writeFileSync("data/orders.json", JSON.stringify(newOrders, undefined, 2));
   res.json({ status: "success" });
 });
 

@@ -1,3 +1,4 @@
+import fs from "fs";
 import express from "express";
 import cors from "cors";
 
@@ -14,7 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", (req, res) => {
-  res.send("# Pizzas API");
+  const homePage = fs.readFileSync("home.html", { encoding: "utf-8" });
+  res.send(homePage);
 });
 
 app.use("/api/allergens", allergensRouter);

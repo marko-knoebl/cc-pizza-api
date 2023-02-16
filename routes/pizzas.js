@@ -50,9 +50,9 @@ pizzasRouter.get("/", (req, res) => {
     const sortDesc = req.query["sort-desc"];
     results.sort((a, b) => {
       if (a[sortDesc] > b[sortDesc]) {
-        return 1;
-      } else if (a[sortDesc] < b[sortDesc]) {
         return -1;
+      } else if (a[sortDesc] < b[sortDesc]) {
+        return 1;
       }
       return 0;
     });
