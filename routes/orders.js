@@ -10,7 +10,7 @@ ordersRouter.get("/", (req, res) => {
 
 ordersRouter.get("/:id", (req, res) => {
   const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
-  const orderFromId = orders.orders.find(
+  const orderFromId = orders.find(
     (order) => order.id.toString() === req.params.id
   );
   res.json(orderFromId);
