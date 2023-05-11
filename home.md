@@ -18,3 +18,4 @@ endpoint examples:
 - _api/orders/1_ PATCH
 - _api/allergens_
 - _api/allergens/1_
+- _api/reset_ (to reset all the API data)

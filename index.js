@@ -5,6 +5,7 @@ import cors from "cors";
 import { allergensRouter } from "./routes/allergens.js";
 import { ordersRouter } from "./routes/orders.js";
 import { pizzasRouter } from "./routes/pizzas.js";
+import { resetRouter } from "./routes/reset.js";
 
 const PORT = 3000;
 
@@ -22,5 +23,6 @@ app.get("/", (req, res) => {
 app.use("/api/allergens", allergensRouter);
 app.use("/api/orders", ordersRouter);
 app.use("/api/pizzas", pizzasRouter);
+app.use("/api/reset", resetRouter);
 
 app.listen(PORT);
