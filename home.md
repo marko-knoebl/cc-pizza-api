@@ -6,7 +6,7 @@ endpoint examples:
 - _api/pizzas/1_
 - _api/pizzas?name=margarita_
 - _api/pizzas?max-price=9.50_
-- _api/pizzas?max-price=9.50&sort-asc=name_&avoid-allergen=B
+- _api/pizzas?max-price=9.50&avoid-allergens=b,c&sort-asc=name_
 - _api/pizzas_ POST
 - _api/orders_
 - _api/orders/1_

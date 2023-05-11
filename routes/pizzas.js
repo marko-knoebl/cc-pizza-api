@@ -1,6 +1,23 @@
 import fs from "fs";
 import express from "express";
 
+const VALID_ALLERGENS = [
+  "a",
+  "b",
+  "c",
+  "d",
+  "e",
+  "f",
+  "g",
+  "h",
+  "l",
+  "m",
+  "n",
+  "o",
+  "p",
+  "r",
+];
+
 const pizzasRouter = express.Router();
 
 pizzasRouter.get("/", (req, res) => {
@@ -17,6 +34,20 @@ pizzasRouter.get("/", (req, res) => {
   if (req.query["avoid-allergen"] !== undefined) {
     const allergen = req.query["avoid-allergen"];
     results = results.filter((pizza) => !pizza.allergens.includes(allergen));
+  }
+  if (req.query["avoid-allergens"] !== undefined) {
+    const allgensStr = req.query["avoid-allergens"];
+    const allergens = allgensStr.split(",");
+    for (let allergen of allergens) {
+      if (!VALID_ALLERGENS.includes(allergen.toLowerCase())) {
+        res.status(400);
+        res.send();
+        return;
+      }
+    }
+    for (let allergen of allergens) {
+      results = results.filter((pizza) => !pizza.allergens.includes(allergen));
+    }
   }
   if (req.query["max-price"] !== undefined) {
     const maxPrice = parseInt(req.query["max-price"]);

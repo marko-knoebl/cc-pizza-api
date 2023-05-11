@@ -5,30 +5,18 @@ const ordersRouter = express.Router();
 
 ordersRouter.get("/", (req, res) => {
   let orders = JSON.parse(fs.readFileSync("./data/orders.json"));
-
-  // filtering
-
   if (req.query["completed"] === "true") {
     orders = orders.filter((order) => order.completed);
   }
   if (req.query["completed"] === "false") {
     orders = orders.filter((order) => !order.completed);
   }
-
   res.json(orders);
 });
 
-ordersRouter.get("/:id", (req, res) => {
-  const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
-  const orderFromId = orders.find(
-    (order) => order.id.toString() === req.params.id
-  );
-  res.json(orderFromId);
-});
-
 ordersRouter.post("/", (req, res) => {
-  const newOrder = req.body;
   const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
+  const newOrder = req.body;
   let maxId = 0;
   for (let order of orders) {
     maxId = Math.max(maxId, order.id);
@@ -41,15 +29,19 @@ ordersRouter.post("/", (req, res) => {
   res.json({ status: "success" });
 });
 
+ordersRouter.get("/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const orders = JSON.parse(fs.readFileSync("./data/orders.json"));
+  const orderFromId = orders.find((order) => order.id === id);
+  res.json(orderFromId);
+});
+
 ordersRouter.delete("/:id", (req, res) => {
   const id = Number(req.params.id);
   const orders = JSON.parse(fs.readFileSync(".data/orders.json"));
   const newOrders = orders.filter((order) => order.id !== id);
 
-  fs.writeFileSync(
-    "./data/orders.json",
-    JSON.stringify(newOrders, undefined, 2)
-  );
+  fs.writeFileSync("data/orders.json", JSON.stringify(newOrders, undefined, 2));
   res.json({ status: "success" });
 });
 

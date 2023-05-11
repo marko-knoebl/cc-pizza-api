@@ -5,6 +5,10 @@
       {
         "id": 1,
         "amount": 2
+      },
+      {
+        "id": 2,
+        "amount": 1
       }
     ],
     "date": {
@@ -47,7 +51,7 @@
         "street": "erste gasse 8"
       }
     },
-    "completed": true
+    "completed": false
   },
   {
     "id": 3,
